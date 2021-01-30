@@ -16,12 +16,6 @@ plastics_clean <- plastics %>%
          country = str_replace_all(country, "United Arab Emirates", "UAE"),
          country = str_replace_all(country, ".*China.*", "China"))
 
-# plastics %>% ggplot(aes(grand_total)) + 
-#   stat_density(geom = "line", position = "identity", size = 2) + 
-#   scale_x_log10() + 
-#   scale_y_log10() +
-#   theme_minimal()
-
 plastic_long <- plastics_clean %>% 
   pivot_longer(cols = -c(country, year, parent_company, volunteers, num_events),
                names_to = "parameters", 
@@ -41,7 +35,8 @@ z1 <- Rtsne(z %>%
               as.matrix() %>% 
               normalize_input() %>% 
               dist(), 
-            perplexity = 10)
+            perplexity = 10,
+            theta = 0.0)
 tibble(x = z1$Y[,1], 
        y = z1$Y[,2], 
        label = z$country, 
@@ -65,29 +60,29 @@ tibble(x = z1$Y[,1],
   theme(panel.background = element_rect(fill = "snow1")) +
   annotate(geom = "text", 
            label = "t-sne plot\nof plastics\ndata",
-           x = -25, y = -15,
+           x = 25, y = 15,
            size = 20,
            family = "Ink free",
            colour = "darkolivegreen") +
   annotate(geom = "label", 
            label = "darker labels indicate more\nbrands of plastic",
-           x = 25, y = 23,
+           x = -30, y = -14,
            size = 8,
            family = "Ink free",
            colour = "firebrick4") +
   annotate(geom = "label", 
            label = "darker circles indicate more\nvolunteers",
-           x = 25, y = 15,
+           x = -30, y = -22,
            size = 8,
            family = "Ink free",
            colour = "darkblue")
   
 
-plastic_long %>% ggplot(aes(values, col = parameters)) + 
-  stat_density(geom = "line", position = "identity", size = 2) + 
-  scale_x_log10() +
-  scale_y_log10() +
-  theme_minimal() +
-  theme(axis.text = element_blank()) +
-  scale_color_viridis_d(option = "magma") +
-  coord_cartesian(ylim = c(0.00001, 1))
+# plastic_long %>% ggplot(aes(values, col = parameters)) + 
+#   stat_density(geom = "line", position = "identity", size = 2) + 
+#   scale_x_log10() +
+#   scale_y_log10() +
+#   theme_minimal() +
+#   theme(axis.text = element_blank()) +
+#   scale_color_viridis_d(option = "magma") +
+#   coord_cartesian(ylim = c(0.00001, 1))
