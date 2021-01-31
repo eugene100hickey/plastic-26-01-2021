@@ -1,0 +1,20 @@
+---
+title: "Untitled"
+author: "Eugene"
+date: "31/01/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
+```
+
+```{r message=F, warning=F}
+library(leaflet)
+leaflet() %>% 
+  addTiles() %>% 
+  setView(-93.65, 42.0285, zoom = 17) %>% 
+  addPopups(-93.65, 42.0285, 
+            "Here is the <b>Department of Statistics</b>, ISU")
+```
+
